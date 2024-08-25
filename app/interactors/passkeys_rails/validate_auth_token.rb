@@ -26,8 +26,8 @@ module PasskeysRails
                  { required_claims: %w[exp agent_id], algorithm: PasskeysRails.auth_token_algorithm }).first
     rescue JWT::ExpiredSignature
       context.fail!(code: :expired_token, message: "The token has expired")
-    rescue StandardError => e
-      context.fail!(code: :token_error, message: e.message)
+    # rescue StandardError => e
+    #   context.fail!(code: :token_error, message: e.message)
     end
   end
 end

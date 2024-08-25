@@ -11,8 +11,8 @@ module PasskeysRails
       context.agent = agent
       context.username = agent.username
       context.auth_token = GenerateAuthToken.call!(agent:).auth_token
-    rescue Interactor::Failure => e
-      context.fail! code: e.context.code, message: e.context.message
+    # rescue Interactor::Failure => e
+    #   context.fail! code: e.context.code, message: e.context.message
     end
 
     private
@@ -26,12 +26,12 @@ module PasskeysRails
 
       passkey.update!(sign_count: webauthn_credential.sign_count)
       agent.update!(last_authenticated_at: Time.current)
-    rescue WebAuthn::SignCountVerificationError
-      # Cryptographic verification of the authenticator data succeeded, but the signature counter was less than or equal
-      # to the stored value. This can have several reasons and depending on your risk tolerance you can choose to fail or
-      # pass authentication. For more information see https://www.w3.org/TR/webauthn/#sign-counter
-    rescue WebAuthn::Error => e
-      context.fail!(code: :webauthn_error, message: e.message)
+    # rescue WebAuthn::SignCountVerificationError
+    #   # Cryptographic verification of the authenticator data succeeded, but the signature counter was less than or equal
+    #   # to the stored value. This can have several reasons and depending on your risk tolerance you can choose to fail or
+    #   # pass authentication. For more information see https://www.w3.org/TR/webauthn/#sign-counter
+    # rescue WebAuthn::Error => e
+    #   context.fail!(code: :webauthn_error, message: e.message)
     end
 
     def webauthn_credential

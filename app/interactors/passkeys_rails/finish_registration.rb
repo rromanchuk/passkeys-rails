@@ -17,22 +17,22 @@ module PasskeysRails
       context.agent = agent
       context.username = agent.username
       context.auth_token = GenerateAuthToken.call!(agent:).auth_token
-    rescue Interactor::Failure => e
-      context.fail! code: e.context.code, message: e.context.message
+    # rescue Interactor::Failure => e
+    #   context.fail! code: e.context.code, message: e.context.message
     end
 
     private
 
     def verify_credential!
       webauthn_credential.verify(challenge)
-    rescue WebAuthn::Error => e
-      context.fail!(code: :webauthn_error, message: e.message)
-    rescue StandardError => e
-      if e.message == "undefined method `end_with?' for nil:NilClass"
-        context.fail!(code: :webauthn_error, message: "origin is not set")
-      else
-        context.fail!(code: :error, message: e.message)
-      end
+    # rescue WebAuthn::Error => e
+    #   context.fail!(code: :webauthn_error, message: e.message)
+    # rescue StandardError => e
+    #   if e.message == "undefined method `end_with?' for nil:NilClass"
+    #     context.fail!(code: :webauthn_error, message: "origin is not set")
+    #   else
+    #     context.fail!(code: :error, message: e.message)
+    #   end
     end
 
     def store_passkey_and_register_agent!
@@ -44,8 +44,8 @@ module PasskeysRails
       )
 
       agent.update! registered_at: Time.current
-    rescue StandardError => e
-      context.fail! code: :passkey_error, message: e.message
+    # rescue StandardError => e
+    #   context.fail! code: :passkey_error, message: e.message
     end
 
     def webauthn_credential
