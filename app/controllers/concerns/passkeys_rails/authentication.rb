@@ -3,9 +3,9 @@ module PasskeysRails
     extend ActiveSupport::Concern
 
     included do
-      rescue_from PasskeysRails::Error do |e|
-        render json: e.to_h, status: :unauthorized
-      end
+      # rescue_from PasskeysRails::Error do |e|
+      #   render json: e.to_h, status: :unauthorized
+      # end
     end
 
     def current_agent
